@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scoreboard Control</title>
+    <style>
+
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .scoreboard-control {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .control-playername {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .control-playername label {
+            width: 120px;
+        }
+        .control-playername input {
+            flex-grow: 1;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .control-playername button {
+            padding: 8px 16px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .control-playername button:hover {
+            background-color: #0056b3;
+        }
+        .control-score {
+            border: 2px solid #ccc;
+            padding: 10px;
+            margin-top: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+        .playerscore {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border: solid 1px black;
+            width: 45%;
+            padding: 10px;
+            align-items: center;
+            gap: 5px;
+        }
+        #player1ScoreDisplay, #player2ScoreDisplay {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #333;
+            margin: 25px 0;
+        }
+        .playerscore h2 {
+            margin: 0;
+            font-size: 1.5em;
+        }
+        .separator {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        #player1Score, #player2Score {
+            width: 60px;
+            height: 25px;
+            text-align: center;
+            font-size: 1em;
+        }
+        .set{
+            padding: 8px 16px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .set:hover {
+            background-color: #1e7e34;
+        }
+        .increment {
+            margin-top: 10px;
+            padding: 8px 16px;
+            width: 50px;
+            font-size: 1.5em;
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .decrement {
+            margin-top: 10px;
+            width: 25px;
+            height: 25px;
+            text-align: center;
+            font-size: 1.2em;
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .decrement:hover, .increment:hover {
+            background-color: #c82333;
+        }
+        #player1NameDisplay {
+            color: rgb(5, 100, 243);
+        }
+        #player2NameDisplay {
+            color: rgb(255, 45, 45);
+        }
+        .resetScores {
+            padding: 10px 20px;
+            background-color: #ffc107;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            align-self: center;
+        }
+        .resetScores:hover {
+            background-color: #e0a800;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        <div class="wrap">
+
+            <div class="scoreboard-control">
+
+                <div class="control-playername" id="controlInputPlayername1">
+                    <label for="playername1">Playername 1</label>
+                    <input type="text" id="playername1" name="playername1"> 
+                    <button onclick="setplayername1(JSON.stringify(document.getElementById('playername1').value))">SET</button>
+                </div>
+
+                <div class="control-playername" id="controlInputPlayername2">
+                    <label for="playername2">Playername 2</label>
+                    <input type="text" id="playername2" name="playername2"> 
+                    <button onclick="setplayername2(JSON.stringify(document.getElementById('playername2').value))">SET</button>
+                </div>
+
+                <div class="control-score">
+
+                    <div class="playerscore">
+                        <h2 id="player1NameDisplay"></h2>
+                        <p id="player1ScoreDisplay">0</p>
+                        <div class="separator">
+                            <input type="number" id="player1Score" name="player1Score" min="0" value="0">
+                            <Button class="set" onclick="setPlayer1Score()">SET</Button>
+                        </div>
+                        <div class="separator">
+                            <button class="decrement" onclick="decrementPlayer1Score()">-</button>
+                            <button class="increment" onclick="incrementPlayer1Score()">+</button>
+                        </div>
+                    </div>
+
+                    <div class="playerscore">
+                        <h2 id="player2NameDisplay"></h2>
+                        <p id="player2ScoreDisplay">0</p>
+                        <div class="separator">
+                            <input type="number" id="player2Score" name="player2Score" min="0" value="0">
+                            <button class="set" onclick="setPlayer2Score()">SET</button>
+                        </div>
+                        <div class="separator">
+                            <button class="decrement" onclick="decrementPlayer2Score()">-</button>
+                            <button class="increment" onclick="incrementPlayer2Score()">+</button>
+                        </div>
+                    </div>
+                    
+                </div>
+                
+                <button class="resetScores" onclick="resetScores()">RESET</button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+
+    // Populate input fields from localStorage (stored as JSON)
+    window.addEventListener('DOMContentLoaded', () => {
+    ['playername1', 'playername2'].forEach(id => {
+        const raw = localStorage.getItem(id);
+        if (!raw) return;
+            try {
+                const obj = JSON.parse(raw);
+                if (obj && obj.name) document.getElementById(id).value = obj.name;
+            } catch (e) {
+                document.getElementById(id).value = raw;
+            }
+        });
+    });
+
+    function parseMaybeJson(input) {
+    if (input == null) return '';
+        try {
+            const parsed = JSON.parse(input);
+            if (typeof parsed === 'string') return parsed;
+            if (parsed && parsed.name) return parsed.name;
+        } catch (e) {
+            // not JSON
+        }
+    return input;
+    }
+
+    function setplayername1(name) {
+        const plain = parseMaybeJson(name);
+        localStorage.setItem('playername1', JSON.stringify({ name: plain }));
+        console.log('playername1 saved', plain);
+        location.reload(); // Reload to update overlay immediately
+        updateScores();
+    }
+
+    function setplayername2(name) {
+        const plain = parseMaybeJson(name);
+        localStorage.setItem('playername2', JSON.stringify({ name: plain }));
+        console.log('playername2 saved', plain);
+        location.reload(); // Reload to update overlay immediately
+        updateScores();
+    }
+
+    // let player1Score = 0;
+    // let player2Score = 0;
+
+    function incrementPlayer1Score() {
+        localStorage.setItem('player1Score', parseInt(localStorage.getItem('player1Score')) + 1);
+        updateScores();
+    }
+    
+    function decrementPlayer1Score() {
+        const currentScore = parseInt(localStorage.getItem('player1Score'));
+        if (currentScore > 0) {
+            localStorage.setItem('player1Score', currentScore - 1);
+        }
+        updateScores();
+    }
+
+    function incrementPlayer2Score() {
+        localStorage.setItem('player2Score', parseInt(localStorage.getItem('player2Score')) + 1);
+        updateScores();
+    }
+
+    function decrementPlayer2Score() {
+        const currentScore = parseInt(localStorage.getItem('player2Score'));
+        if (currentScore > 0) {
+            localStorage.setItem('player2Score', currentScore - 1);
+        }
+        updateScores();
+    }
+
+    function updateScores() {
+        document.getElementById('player1ScoreDisplay').innerText = localStorage.getItem('player1Score');
+        document.getElementById('player2ScoreDisplay').innerText = localStorage.getItem('player2Score');
+    }
+
+    function setPlayer1Score() {
+        const input = document.getElementById('player1Score');
+        localStorage.setItem('player1Score', parseInt(input.value) || 0);
+        updateScores();
+    }
+
+    function setPlayer2Score() {
+        const input = document.getElementById('player2Score');
+        localStorage.setItem('player2Score', parseInt(input.value) || 0);
+        updateScores();
+    }
+
+    function resetScores() {
+        localStorage.setItem('player1Score', '0');
+        localStorage.setItem('player2Score', '0');
+        updateScores();
+    }
+
+    let playername1 = '';
+    let playername2 = '';
+    try {
+        playername1 = JSON.parse(localStorage.getItem('playername1')).name;
+    } catch (e) {}
+    try {
+        playername2 = JSON.parse(localStorage.getItem('playername2')).name;
+    } catch (e) {}
+
+    document.getElementById('player1NameDisplay').innerText = playername1 || '';
+    document.getElementById('player2NameDisplay').innerText = playername2 || '';
+
+    document.getElementById('player1ScoreDisplay').innerText = localStorage.getItem('player1Score');
+    document.getElementById('player2ScoreDisplay').innerText = localStorage.getItem('player2Score');
+
+    </script>
+</body>
+</html>
