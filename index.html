@@ -23,12 +23,23 @@
                 </div>
                 <div class="box-button">
                     <button onclick="copyText('localhost:5500/index.html')">Copy Localhost</button>
-                    <button onclick="copyText('IP',':5500/index.html')">Copy IP</button>
+                    <!-- <button onclick="copyText('IP',':5500/index.html')">Copy IP</button> -->
                     <a href="overlay/scoreboard.html" target="_blank" rel="noopener noreferrer">Open in new Tab</a>
                 </div>
             </div>
+
             <div class="box">
+                <h1 class="box-desc">Introduction Animation</h1>
+                <div class="box-image">
+
+                </div>
+                <div class="box-button">
+                    <button onclick="copyText('localhost:5500/control/introduction_animation.html')">Copy Localhost</button>
+                    <!-- <button onclick="copyText('IP',':5500/control/introduction_animation.html')">Copy IP</button> -->
+                    <a href="overlay/introduction_animation.html" target="_blank" rel="noopener noreferrer">Open in new Tab</a>
+                </div>
             </div>
+
             <div class="box"></div>
             <div class="box"></div>
             <div class="box"></div>
@@ -44,7 +55,7 @@
                 </div>
                 <div class="box-button">
                     <button onclick="copyText('localhost:5500/control/scoreboardcontrol.html')">Copy Localhost</button>
-                    <button onclick="copyText('IP',':5500/control/scoreboardcontrol.html')">Copy IP</button>
+                    <!-- <button onclick="copyText('IP',':5500/control/scoreboardcontrol.html')">Copy IP</button> -->
                     <a href="control/scoreboardcontrol.html" target="_blank" rel="noopener noreferrer">Open in new Tab</a>
                 </div>
             </div>
@@ -57,14 +68,12 @@
     <script>
         function copyText(text,url) {
 
-            let IPAddress = "10.111.97.104";
-
             //Validation
             if (text == "IP") {
 
                 // Copy the text to clipboard
-                navigator.clipboard.writeText(IPAddress + url)
-                .then(() => alert("Copied: " + IPAddress + url))
+                navigator.clipboard.writeText(getLocalIP() + url)
+                .then(() => alert("Copied: " + getLocalIP() + url))
                 .catch(err => console.error("Failed to copy: ", err));
 
             } else {

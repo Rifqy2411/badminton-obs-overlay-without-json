@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Introduction animation</title>
+    <link rel="stylesheet" href="../var.css">
+    <style>
+        *,html{
+            margin: 0;
+            padding: 0;
+        }
+        .container{
+            width: 100vw;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .slides-wrap{
+            /* margin-top: -500px; */
+            width: 100%;
+            height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #cccccc3a;
+        }
+        .slide{
+            width: 90%;
+            height: 90%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            background-color: var(--primary-color-transparent);
+            gap: 45px;
+        }
+
+        .slides-animation{
+            /* animation: slideAnimation 15s normal forwards; */
+        }
+        .slide-wrap-content{
+            width: 45%;
+            height: 85%;
+            box-shadow: rgba(0, 0, 0, 0.4) 15px 15px 0 0;
+            color: rgb(37, 37, 37);
+            border-bottom-left-radius: 60px;
+            border-top-right-radius: 60px;
+            /* background-color: var(--accent-color); */
+        }
+        #slide1Content, #slide2Content{
+            font-size: 2.5em;
+            font-weight: 600;
+            font-family: Arial, Helvetica, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-transform: uppercase;
+            /* background-color: aquamarine; */
+        }
+        .slideImage{
+            width: 100%;
+            height: 320px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .slideImage>img{
+            width: 300px;
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        @keyframes slideAnimation {
+            0% { transform: translateY(0); padding: 0;}
+            20% { transform: translateY(500px); padding: 0;}
+            25% { transform: translateY(600px); padding: 0;}
+            45% { transform: translateY(700px); padding-bottom: 5%; padding-top: 5%;}
+            50% { transform: translateY(700px); padding-bottom: 5%; padding-top: 5%;}
+            70% { transform: translateY(700px); padding-bottom: 7%; padding-top: 7%;}
+            75% { transform: translateY(700px); padding-bottom: 7%; padding-top: 7%;}
+            95% { transform: translateY(500px); padding: 0;}
+            100% { transform: translateY(0); }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="slidesWrap" class="slides-wrap">
+            <div class="slide">
+                <div class="slide-wrap-content" style="background-color: var(--tim-a);">
+                    <div class="slideImage">
+                        <img src="/assets/img/tim_a_default.png" alt="">
+                    </div>
+                    <p id="slide1Content"></p>
+                </div>
+                <div class="slide-wrap-content" style="background-color: var(--tim-b);">
+                    <div class="slideImage">
+                        <img src="/assets/img/tim_b_default.png" alt="">
+                    </div>
+                    <p id="slide2Content"></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="button" style="margin-top: 90%;">
+            <button class="start-animation" onclick="startAnimation()">&#9654;</button>
+            <button class="stop-animation"   onclick="stopAnimation()">&#10006;</button>
+        </div>
+    </div>
+
+    <script>
+
+        let playername1 = '';
+        let playername2 = '';
+        try {
+            playername1 = JSON.parse(localStorage.getItem('playername1')).name;
+        } catch (e) {}
+        try {
+            playername2 = JSON.parse(localStorage.getItem('playername2')).name;
+        } catch (e) {}
+
+        document.getElementById('slide1Content').innerHTML = playername1 || '';
+        document.getElementById('slide2Content').innerHTML = playername2 || '';
+
+        setInterval(() => {
+            if(localStorage.getItem('refresh_other_pages') === 'true') {
+                localStorage.setItem('refresh_other_pages', 'false');
+                location.reload();
+            }
+        }, 500);
+         setInterval(() => {
+            if(localStorage.getItem('startAnimation') === 'false' && localStorage.getItem('refresh_other_pages') === 'true') {
+                localStorage.setItem('refresh_other_pages', 'false');
+                stopAnimation();
+                location.reload();
+            }
+        }, 500);
+        if(localStorage.getItem('startAnimation') === 'true') {
+            setInterval(() => {
+                startAnimation();
+            }, 500);
+            console.log('start animation');
+        }
+        if(localStorage.getItem('startAnimation') === 'false') {
+            stopAnimation();
+            console.log('stop animation');
+        }
+        else {
+            stopAnimation();
+        }
+
+        function startAnimation() {
+            document.getElementById('slidesWrap').classList.add('slides-animation');
+        }
+
+        function stopAnimation() {
+            const slidesWrap = document.getElementById('slidesWrap');
+            slidesWrap.classList.remove('slides-animation');
+            // Force reflow to reset the animation
+            void slidesWrap.offsetWidth;
+        }
+
+    </script>
+</body>
+</html>

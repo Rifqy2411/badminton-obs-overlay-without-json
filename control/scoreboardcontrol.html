@@ -159,6 +159,24 @@
             background-color: #e0a800;
             color: red;
         }
+        .animation-controls {
+            background-color: #ccc;
+            width: 200px;
+            height: 100px;
+            margin: 0;
+            padding: 5px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+        .animation-controls-buttons {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
     </style>
 </head>
 <body>
@@ -216,10 +234,25 @@
 
         </div>
 
+        <div class="wrap" style="margin-top: 35px;">
+            <div class="scoreboard-control" style="border-top: solid 1px #ccc;">
+                <h2>Animation Control</h2>
+
+                <div class="animation-controls">
+                    <p>Introduction Animation</p>
+                    <div class="animation-controls-buttons">
+                        <button class="start-animation" onclick="startAnimation()">&#9654;</button>
+                        <button class="stop-animation"   onclick="stopAnimation()">&#10006;</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
     </div>
 
     <script>
-
+    
     // Populate input fields from localStorage (stored as JSON)
     window.addEventListener('DOMContentLoaded', () => {
     ['playername1', 'playername2'].forEach(id => {
@@ -328,6 +361,16 @@
 
     document.getElementById('player1ScoreDisplay').innerText = localStorage.getItem('player1Score');
     document.getElementById('player2ScoreDisplay').innerText = localStorage.getItem('player2Score');
+
+    function startAnimation() {
+        localStorage.setItem('startAnimation', 'true');
+        localStorage.setItem('refresh_other_pages', 'true');
+    }
+
+    function stopAnimation() {
+        localStorage.setItem('startAnimation', 'false');
+        localStorage.setItem('refresh_other_pages', 'true');
+    }
 
     </script>
 </body>
