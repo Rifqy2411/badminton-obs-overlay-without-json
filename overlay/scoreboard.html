@@ -4,7 +4,70 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Scoreboard</title>
-    <link rel="stylesheet" href="scoreboard.css">
+    <style>
+        *,html{
+            padding: 0;
+            margin: 0;
+        }
+        .container{
+            width: fit-content;
+        }
+        .time-score{
+            background-color: var(--primary-color);
+            box-shadow: var(--secondary-color) 5px 5px 0 0;
+            width: 320px;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            border-top-left-radius: 50px;
+            border-bottom-right-radius: 50px;
+        }
+        .tournament-logo{
+            margin-left: 10px;
+            background-color: pink;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+        }
+        .stats{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 210px;
+            height: 80px;
+            gap: 5px;
+        }
+        .player-score{
+            display: flex;
+            flex-direction: row;
+            height: 35px;
+            width: 190px;
+        }
+        .playername{
+            text-transform: uppercase;
+            height: 35px;
+            width: 165px;
+            background-color: orange;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: black;
+            font-family: Helvetica;
+            font-weight: 600;
+        }
+        .score{
+            height: 35px;
+            width: 35px;
+            background-color: white;
+            color: black;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: Helvetica;
+            font-weight: 600;
+        }
+    </style>
     <link rel="stylesheet" href="../var.css">
 </head>
 <body>

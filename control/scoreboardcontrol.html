@@ -177,6 +177,22 @@
             justify-content: center;
             gap: 5px;
         }
+        .start-animation{
+            padding: 8px 16px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .stop-animation{
+            padding: 8px 16px;
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -186,13 +202,19 @@
 
             <div class="scoreboard-control">
 
-                <div class="control-playername" id="controlInputPlayername1">
+                <div class="control-playername" >
+                    <label for="roundName">Round Name</label>
+                    <input type="text" id="roundName" name="roundName"> 
+                    <button onclick="setRoundName(JSON.stringify(document.getElementById('roundName').value))">SET</button>
+                </div>
+
+                <div class="control-playername">
                     <label for="playername1">Playername 1</label>
                     <input type="text" id="playername1" name="playername1"> 
                     <button onclick="setplayername1(JSON.stringify(document.getElementById('playername1').value))">SET</button>
                 </div>
 
-                <div class="control-playername" id="controlInputPlayername2">
+                <div class="control-playername">
                     <label for="playername2">Playername 2</label>
                     <input type="text" id="playername2" name="playername2"> 
                     <button onclick="setplayername2(JSON.stringify(document.getElementById('playername2').value))">SET</button>
@@ -234,12 +256,20 @@
 
         </div>
 
-        <div class="wrap" style="margin-top: 35px;">
-            <div class="scoreboard-control" style="border-top: solid 1px #ccc;">
-                <h2>Animation Control</h2>
+        <div class="wrap" style="margin-top: 35px; border-top: solid 1px #ccc;">
+            <h2>Animation Control</h2>
+            <div class="scoreboard-control" style="flex-direction: row; align-items: center; justify-content: center;">
 
                 <div class="animation-controls">
                     <p>Introduction Animation</p>
+                    <div class="animation-controls-buttons">
+                        <button class="start-animation" onclick="startAnimation()">&#9654;</button>
+                        <button class="stop-animation"   onclick="stopAnimation()">&#10006;</button>
+                    </div>
+                </div>
+
+                <div class="animation-controls">
+                    <p>Challenge Animation</p>
                     <div class="animation-controls-buttons">
                         <button class="start-animation" onclick="startAnimation()">&#9654;</button>
                         <button class="stop-animation"   onclick="stopAnimation()">&#10006;</button>
@@ -255,7 +285,7 @@
     
     // Populate input fields from localStorage (stored as JSON)
     window.addEventListener('DOMContentLoaded', () => {
-    ['playername1', 'playername2'].forEach(id => {
+    ['playername1', 'playername2', 'roundName'].forEach(id => {
         const raw = localStorage.getItem(id);
         if (!raw) return;
             try {
@@ -277,6 +307,14 @@
             // not JSON
         }
     return input;
+    }
+
+    function setRoundName(name) {
+        const plain = parseMaybeJson(name);
+        localStorage.setItem('roundName', JSON.stringify({ name: plain }));
+        console.log('roundName saved', plain);
+        location.reload(); // Reload to update overlay immediately
+        updateScores();
     }
 
     function setplayername1(name) {
