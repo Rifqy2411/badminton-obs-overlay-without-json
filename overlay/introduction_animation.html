@@ -218,19 +218,19 @@
             }
         }, 500);
          setInterval(() => {
-            if(localStorage.getItem('startAnimation') === 'false' && localStorage.getItem('refresh_other_pages') === 'true') {
+            if(localStorage.getItem('startAnimation') === 'IntroductionAnimStop' && localStorage.getItem('refresh_other_pages') === 'true') {
                 localStorage.setItem('refresh_other_pages', 'false');
                 stopAnimation();
                 location.reload();
             }
         }, 500);
-        if(localStorage.getItem('startAnimation') === 'true') {
+        if(localStorage.getItem('startAnimation') === 'IntroductionAnim') {
             setInterval(() => {
                 startAnimation();
             }, 500);
             console.log('start animation');
         }
-        if(localStorage.getItem('startAnimation') === 'false') {
+        if(localStorage.getItem('startAnimation') === 'IntroductionAnimStop') {
             stopAnimation();
             console.log('stop animation');
         }

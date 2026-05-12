@@ -67,6 +67,19 @@
             font-family: Helvetica;
             font-weight: 600;
         }
+        .shuttlecock-pointer{
+            width: 25px;
+            height: 35px;
+            padding-left: 2px;
+            padding-right: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .shuttlecock-pointer>img{
+            width: 20px;
+            height: 20px;
+        }
     </style>
     <link rel="stylesheet" href="../var.css">
 </head>
@@ -80,10 +93,16 @@
             <div class="stats">
                 <div class="player-score">
                     <div class="playername" style="background-color: var(--tim-a);" id="scoreboardPlayer1"></div>
+                    <div class="shuttlecock-pointer" style="background-color: var(--tim-a);">
+                        <img id="shuttlecockPlayer1" src="../assets/img/shuttlecock_icon.png" alt="">
+                    </div>
                     <div class="score" id="scoreboardPlayer1Score"></div>
                 </div>
                 <div class="player-score">
                     <div class="playername" style="background-color: var(--tim-b)" id="scoreboardPlayer2"></div>
+                    <div class="shuttlecock-pointer" style="background-color: var(--tim-b);">
+                        <img id="shuttlecockPlayer2" src="../assets/img/shuttlecock_icon.png" alt="">
+                    </div>
                     <div class="score" style="border-bottom-right-radius: 15px;" id="scoreboardPlayer2Score"></div>
                 </div>
                 
@@ -102,6 +121,17 @@
     try {
         playername2 = JSON.parse(localStorage.getItem('playername2')).name;
     } catch (e) {}
+
+    if(localStorage.getItem('shuttlecockPlayerPointer') === 'Player1') {
+        document.getElementById('shuttlecockPlayer1').style.visibility = 'visible';
+        document.getElementById('shuttlecockPlayer2').style.visibility = 'hidden';
+    } else if (localStorage.getItem('shuttlecockPlayerPointer') === 'Player2') {
+        document.getElementById('shuttlecockPlayer1').style.visibility = 'hidden';
+        document.getElementById('shuttlecockPlayer2').style.visibility = 'visible';
+    } else {
+        document.getElementById('shuttlecockPlayer1').style.visibility = 'hidden';
+        document.getElementById('shuttlecockPlayer2').style.visibility = 'hidden';
+    }
 
     document.getElementById('scoreboardPlayer1').innerHTML = playername1 || '';
     document.getElementById('scoreboardPlayer2').innerHTML = playername2 || '';

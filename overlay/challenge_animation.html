@@ -17,30 +17,130 @@
             align-items: center;
         }
         .wrap{
+            margin-top: 300px;
             width: 30%;
             height: 100px;
-            background-color: var(--accent-color);
-            box-shadow: var(--secondary-color) 5px 5px 0 0;
+            background-color: var(--challenge-active-color);
+            box-shadow: white 5px 5px 0 0;
             display: flex;
             align-items: center;
             justify-content: center;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 1.5em;
+            font-weight: 800;
             border-top-left-radius: 50px;
             border-bottom-right-radius: 50px;
         }
-        .wrap>p{
+        #challengeText{
             font-size: 2em;
             color: black;
             font-family: Helvetica;
             font-weight: 600;
             text-transform: uppercase;
         }
+
+        /* ANIMATION STYLES */
+
+        .slideAnimation{
+            animation: slideAnimation 5s normal forwards;
+        }
+
+        .challengeSuccess{
+            transition: ease-in 1s;
+            background-color: rgb(61, 253, 13);
+            padding: 5px;
+            transform: translateY(-300px);
+        }
+
+        .challengeFailed{
+            transition: ease-in 1s;
+            background-color: rgb(255, 0, 0);
+            padding: 5px;
+            transform: translateY(-300px);
+        }
+
+        /* ANIMATION KEYFRAMES */
+
+        @keyframes slideAnimation {
+            0% { transform: translateY(0); }
+            20% { transform: translateY(-300px); }
+            25% { transform: translateY(-300px); }
+            45% { transform: translateY(-300px); }
+            50% { transform: translateY(-300px); }
+            70% { transform: translateY(-300px); }
+            75% { transform: translateY(-300px); }
+            90% { transform: translateY(-300px); }
+            100% { transform: translateY(-300px); }
+        }
+
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="wrap">
-            <p>Challenge</p>
+        <div class="wrap" id="wrap" onclick="startAnimation()">
+            <div id="challengeText">Challenge</div>
         </div>
     </div>
+
+    <script>
+
+        setInterval(() => {
+            if(localStorage.getItem('refresh_other_pages') === 'true') {
+                localStorage.setItem('refresh_other_pages', 'false');
+                location.reload();
+            }
+        }, 500);
+        setInterval(() => {
+            if(localStorage.getItem('startAnimation') === 'ChallengeAnimStop' && localStorage.getItem('refresh_other_pages') === 'true') {
+                localStorage.setItem('refresh_other_pages', 'false');
+                stopAnimation();
+                location.reload();
+            }
+        }, 500);
+        if(localStorage.getItem('startAnimation') === 'ChallengeAnim') {
+            setInterval(() => {
+                startAnimation();
+            }, 500);
+            console.log('start animation');
+        }
+        if(localStorage.getItem('challengeText') === 'Challenge Success') {
+            setInterval(() => {
+                ChangeChallengeTextSuccess();
+            }, 500);
+            console.log('Challenge Text Changed');
+        }
+        if(localStorage.getItem('challengeText') === 'Challenge Failed') {
+            setInterval(() => {
+                ChangeChallengeTextFailed();
+            }, 500);
+            console.log('Challenge Text Changed');
+        }
+        if(localStorage.getItem('startAnimation') === 'ChallengeAnimStop') {
+            stopAnimation();
+            console.log('stop animation');
+        }
+        else {
+            stopAnimation();
+        }
+
+        function startAnimation() {
+            document.getElementById('challengeText').innerHTML = 'Challenge';
+            document.getElementById('wrap').classList.add('slideAnimation');
+        }
+        function stopAnimation() {
+            document.getElementById('wrap').classList.remove('slideAnimation,challengeSuccess');
+            // document.getElementById('wrap').classList.remove('challengeSuccess');
+            void document.getElementById('wrap').offsetWidth;
+        }
+        function ChangeChallengeTextSuccess(){
+            document.getElementById('challengeText').innerHTML = localStorage.getItem('challengeText');
+            document.getElementById('wrap').classList.add('challengeSuccess');
+        }
+        function ChangeChallengeTextFailed(){
+            document.getElementById('challengeText').innerHTML = localStorage.getItem('challengeText');
+            document.getElementById('wrap').classList.add('challengeFailed');
+        }
+
+    </script>
 </body>
 </html>

@@ -263,16 +263,19 @@
                 <div class="animation-controls">
                     <p>Introduction Animation</p>
                     <div class="animation-controls-buttons">
-                        <button class="start-animation" onclick="startAnimation()">&#9654;</button>
-                        <button class="stop-animation"   onclick="stopAnimation()">&#10006;</button>
+                        <button class="start-animation" onclick="startAnimation('IntroductionAnim')">&#9654;</button>
+                        <button class="stop-animation"   onclick="stopAnimation('IntroductionAnim')">&#10006;</button>
                     </div>
                 </div>
 
                 <div class="animation-controls">
                     <p>Challenge Animation</p>
                     <div class="animation-controls-buttons">
-                        <button class="start-animation" onclick="startAnimation()">&#9654;</button>
-                        <button class="stop-animation"   onclick="stopAnimation()">&#10006;</button>
+                        <button class="start-animation" onclick="startAnimation('ChallengeAnim')">&#9654;</button>
+                        <button class="stop-animation"   onclick="stopAnimation('ChallengeAnim')">&#10006;</button>
+                        <button class="stop-animation"   onclick="ChallengeText('Challenge Success')">+</button>
+                        <button class="stop-animation"   onclick="ChallengeText('Challenge Failed')">-</button>
+                        <!-- <button class="stop-animation"   onclick="ChallengeTextReset('Challenge')">()</button> -->
                     </div>
                 </div>
 
@@ -338,6 +341,7 @@
 
     function incrementPlayer1Score() {
         localStorage.setItem('player1Score', parseInt(localStorage.getItem('player1Score')) + 1);
+        localStorage.setItem('shuttlecockPlayerPointer', 'Player1');
         updateScores();
     }
     
@@ -351,6 +355,7 @@
 
     function incrementPlayer2Score() {
         localStorage.setItem('player2Score', parseInt(localStorage.getItem('player2Score')) + 1);
+        localStorage.setItem('shuttlecockPlayerPointer', 'Player2');
         updateScores();
     }
 
@@ -400,16 +405,23 @@
     document.getElementById('player1ScoreDisplay').innerText = localStorage.getItem('player1Score');
     document.getElementById('player2ScoreDisplay').innerText = localStorage.getItem('player2Score');
 
-    function startAnimation() {
-        localStorage.setItem('startAnimation', 'true');
+    function startAnimation(animationName) {
+        localStorage.removeItem('challengeText');
+        localStorage.setItem('startAnimation', animationName);
         localStorage.setItem('refresh_other_pages', 'true');
     }
 
-    function stopAnimation() {
-        localStorage.setItem('startAnimation', 'false');
+    function stopAnimation(animationName) {
+        localStorage.removeItem('challengeText');
+        localStorage.setItem('startAnimation', animationName + 'Stop');
         localStorage.setItem('refresh_other_pages', 'true');
     }
 
+    function ChallengeText(text){
+        localStorage.removeItem('startAnimation');
+        localStorage.setItem('challengeText', text);
+        localStorage.setItem('refresh_other_pages', 'true');
+    }
     </script>
 </body>
 </html>
